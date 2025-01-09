@@ -1,8 +1,8 @@
-# Gerenciador de Eventos - Desafio Residência
+# Gerenciador de Eventos - Desafio Residência - NEKI
 
 ## Descrição do Projeto
 
-O **Gerenciador de Eventos** é um projeto de estudos com foco na implementação de um sistema que será operado por um Administrador que fará o controle de eventos através da plataforma web ou mobile, podendo cadastrar, listar, editar ou remover eventos. Esse administrador terá um login específico que será criado através da tela de cadastro de administrador. Os dados sensíveis, como a senha cadastrada, são salvos no Banco de Dados de forma criptografada e o sistema todo utiliza Java Web Token para validação das requisições.
+O **Gerenciador de Eventos** é um projeto de estudos elaborado para a empresa Neki em seu processo seletivo pós Residência em TIC do SerraTec. Com foco na implementação de um sistema que será operado por um Administrador que fará o controle de eventos através da plataforma web ou mobile, podendo cadastrar, listar, editar ou remover eventos. Esse administrador terá um login específico que será criado através da tela de cadastro de administrador. Os dados sensíveis, como a senha cadastrada, são salvos no Banco de Dados de forma criptografada e o sistema todo utiliza Java Web Token para validação das requisições.
 
 Este repositório contém a implementação **FullStack** do sistema, contendo tanto a elaboração do **BackEnd** através do framework Spring Boot, quanto o **FrontEnd** através dos frameworks React para versão web, e React-Native para versão mobile.
 
