@@ -29,7 +29,7 @@ public class EventoController {
 
 	@Autowired
 	private EventoService eventoService;
-	
+	/*
 	@Operation(summary = "Insere um novo evento")
 	@ApiResponses(value = { 
 			@ApiResponse(responseCode = "201", 
@@ -44,11 +44,9 @@ public class EventoController {
 	    EventoResponseDto response = eventoService.criarEvento(eventoRequest);
 	    return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
-	
+	*/
 	@GetMapping
 	public List<Evento> listarEventos(@RequestParam Long adminId) {
 	    return null;//eventoService.findByAdminId(adminId);
 	}
-	
-
 }

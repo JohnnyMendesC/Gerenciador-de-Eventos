@@ -22,7 +22,7 @@ public class Admin {
 	private String senha;
 
 //	Relação externa com os eventos de administrador (1, N):
-	@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "adminResponsavel", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Evento> eventos = new ArrayList<>();
 
 //	Getters e Setters:
