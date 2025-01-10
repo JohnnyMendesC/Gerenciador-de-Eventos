@@ -33,13 +33,14 @@ public class AdminController {
 
 	@Autowired
 	private AdminService adminService;
-
 	@Operation(summary = "Cria um novo administrador")
 	@ApiResponses(value = { @ApiResponse(responseCode = "201", content = {
-			@Content(schema = @Schema(implementation = Evento.class), mediaType = "application/json") }, description = "Administrador cadastrado com sucesso"),
+			@Content(schema = @Schema(implementation = Admin.class), mediaType = "application/json") }, description = "Administrador cadastrado com sucesso"),
+			@ApiResponse(responseCode = "400", description = "Requisição inválida. Verifique se os parâmetros fornecidos estão corretos e no formato esperado."),
 			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
 			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
 			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
 	@PostMapping("/cadastro")
 	public ResponseEntity<AdminResponseDto> criarAdministrador(@RequestBody AdminRequestDto adminRequestDto) {
@@ -61,11 +62,15 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.encontrarTodosAdmins());
 	}
 
-	@Operation(summary = "Filtra categoria por ID", description = "Busca uma categoria de acordo com o seu ID.")
-	@ApiResponses(value = { @ApiResponse(responseCode = "200", description = "Requisição encontrada!"),
+	@Operation(summary = "Busca administrador por Id", description = "Busca um administrador de acordo com o seu Id.")
+	@ApiResponses(value = { 
+			@ApiResponse(responseCode = "200", content = {
+			@Content(schema = @Schema(implementation = Admin.class), mediaType = "application/json") }, description = "Retorna o Administrador por Id"),
 			@ApiResponse(responseCode = "400", description = "Requisição inválida. Verifique se os parâmetros fornecidos estão corretos e no formato esperado."),
-			@ApiResponse(responseCode = "404", description = "Busca não encontrada. Verifique o ID ou outros parâmetros informados."),
-			@ApiResponse(responseCode = "500", description = "Erro interno no servidor. Tente novamente mais tarde.") })
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "500", description = "Erro interno no servidor") })
 	@GetMapping("{id}")
 	public ResponseEntity<Optional<AdminResponseDto>> exibirAdminPorId(@PathVariable Long id) {
 		return ResponseEntity.ok(adminService.encontrarPorAdminId(id));
@@ -74,6 +79,6 @@ public class AdminController {
 	
 	@GetMapping("/perfil")
 	public ResponseEntity<String> exibirPerfil(Authentication authentication) {
-	    return ResponseEntity.ok("Usuário autenticado: " + authentication.getName());
+	    return ResponseEntity.ok("Usuário autenticado: " + authentication);
 	}
 }

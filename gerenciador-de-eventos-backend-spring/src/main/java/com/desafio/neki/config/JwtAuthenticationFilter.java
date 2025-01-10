@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -35,9 +36,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (token != null) {
             String email = tokenService.validateToken(token);
             if (!email.isEmpty()) {
-            	Admin admin = autenticacaoService.buscarPorEmail(email);
+            	UserDetails userDetails = autenticacaoService.loadUserByUsername(email);
                 PreAuthenticatedAuthenticationToken authentication = 
-                		new PreAuthenticatedAuthenticationToken(admin, null, List.of());
+                		new PreAuthenticatedAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

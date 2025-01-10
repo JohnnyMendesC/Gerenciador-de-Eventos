@@ -31,6 +31,7 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers("/autenticacao/**").permitAll() 	// ● Segurança JWT para serviços, exceto o login.
             		.requestMatchers("/admins/cadastro/**").permitAll() // E cadastro
+					.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
             		.anyRequest().authenticated() 						// Permite outras requisições somente com autenticação
             		//.anyRequest().permitAll() 						// Permite todas requisições na fase de desenvolvimento
             )
