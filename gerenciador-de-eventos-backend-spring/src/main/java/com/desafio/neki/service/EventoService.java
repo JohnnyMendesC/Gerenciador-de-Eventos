@@ -11,6 +11,7 @@ import com.desafio.neki.dto.EventoRequestDto;
 import com.desafio.neki.dto.EventoResponseDto;
 import com.desafio.neki.entity.Admin;
 import com.desafio.neki.entity.Evento;
+import com.desafio.neki.exception.ResourceNotFoundException;
 import com.desafio.neki.repository.AdminRepository;
 import com.desafio.neki.repository.EventoRepository;
 
@@ -45,12 +46,11 @@ public class EventoService {
 	public List<EventoResponseDto> encontrarTodosEventos() {
 		return eventoRepository.findAll().stream().map(evento -> EventoResponseDto.fromEntity(evento)).toList();
 	}
-	/*
-	public Optional<EventoResponseDto> encontrarPorAdminId(Long id) {
-		if (!adminRepository.existsById(id)) {
-		}
-		return Optional.of(AdminResponseDto.fromEntity(adminRepository.findById(id).get()));
-	}*/
+	public List<EventoResponseDto> encontrarEventosPorAdminId() {
+		Admin adminAutenticado = autenticacaoService.getAuthenticatedUser();
+		List<Evento> eventos = eventoRepository.findByAdminResponsavel_AdminId(adminAutenticado.getAdminId());
+		return eventos.stream().map(EventoResponseDto::fromEntity).toList();
+	}
 	
 	public Optional<EventoResponseDto> encontrarPorEventoId(Long id) {
 		if (!eventoRepository.existsById(id)) {
@@ -59,7 +59,32 @@ public class EventoService {
 	}
 	
 //	Update | Atualizar/Editar
+	public EventoResponseDto atualizarEvento(Long eventoId, EventoRequestDto dto) {
+		Evento evento = eventoRepository.findById(eventoId)
+				.orElseThrow(() -> new ResourceNotFoundException("Evento com id "+ eventoId  +" não encontrado."));
+		
+		if (dto.getData() != null) {
+			evento.setData(dto.getData());
+		}
+		if (dto.getLocalizacao() != null) {
+			evento.setLocalizacao(dto.getLocalizacao());
+		}
+		if (dto.getImagemUrl() != null) {
+			evento.setImagemUrl(dto.getImagemUrl());
+		}
+		if (dto.getData() == null && dto.getLocalizacao() == null && dto.getImagemUrl() == null) {
+		    throw new IllegalArgumentException("Pelo menos um campo (imagem, data ou localização) deve ser informado.");
+		}
+
+		
+		eventoRepository.save(evento);
+		return EventoResponseDto.fromEntity(evento);
+	}
 	
 //	Delete | Deletar
-	
+	public void deletarEvento(Long id) {
+		Evento evento = eventoRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Evento com id "+ id +" não encontrado."));
+		eventoRepository.delete(evento);
+	}
 }
