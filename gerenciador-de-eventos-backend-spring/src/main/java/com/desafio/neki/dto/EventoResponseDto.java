@@ -6,6 +6,7 @@ import com.desafio.neki.entity.Evento;
 
 public class EventoResponseDto {
 //	Dados que voltam na resposta
+	private Long eventoId;
     private String nome;
     private LocalDate data;
     private String localizacao;
@@ -15,14 +16,16 @@ public class EventoResponseDto {
 //	Construtor cheio e vazio:
     public EventoResponseDto(Evento evento) {
     	super();
+    	this.eventoId = evento.getEventoId();
     	this.nome = evento.getNome();
     	this.data = evento.getData();
     	this.localizacao = evento.getLocalizacao();
     	this.imagemUrl = evento.getImagemUrl();
     	this.adminId = evento.getAdminResponsavel().getAdminId();
     }
-	public EventoResponseDto(String nome, LocalDate data, String localizacao, String imagemUrl, Long adminId) {
+	public EventoResponseDto(Long eventoId, String nome, LocalDate data, String localizacao, String imagemUrl, Long adminId) {
 		super();
+		this.eventoId = eventoId;
 		this.nome = nome;
 		this.data = data;
 		this.localizacao = localizacao;
@@ -36,6 +39,7 @@ public class EventoResponseDto {
 //	Conversor de Entidade para ResponseDto (utilizado no Service):
 	public static EventoResponseDto fromEntity(Evento evento) {
 		return new EventoResponseDto(
+				evento.getEventoId(),
 				evento.getNome(),
 				evento.getData(),
 				evento.getLocalizacao(),
@@ -45,6 +49,12 @@ public class EventoResponseDto {
 	}
 	
 //	Getters Setters:
+	public Long getEventoId() {
+		return eventoId;
+	}
+	public void setEventoId(Long eventoId) {
+		this.eventoId = eventoId;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -75,6 +85,4 @@ public class EventoResponseDto {
 	public void setAdminId(Long adminId) {
 		this.adminId = adminId;
 	}
-	
-	
 }
