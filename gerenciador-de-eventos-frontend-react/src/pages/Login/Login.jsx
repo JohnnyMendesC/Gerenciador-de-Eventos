@@ -2,7 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { login as loginService } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import { LoginContainer, Title, Form, Label, Input, Button } from './style';
+import { LoginContainer, Title, Form, Label, Input, Button, Div, Label2 } from './style';
+import Switch from '@mui/material/Switch';
 
 function Login() {
   const [email, setEmail] = useState(localStorage.getItem('lastEmail') || '');
@@ -53,15 +54,15 @@ function Login() {
           onChange={(e) => setSenha(e.target.value)}
           required
         />
-        <div>
-          <Input
+        <Div>
+          <Switch
             id="lembrarSenha"
-            type="checkbox"
             checked={lembrarSenha}
             onChange={(e) => setLembrarSenha(e.target.checked)}
+            color="warning"
           />
-          <Label htmlFor="lembrarSenha">Manter Conectado</Label>
-        </div>
+          <Label2 htmlFor="lembrarSenha">Manter Conectado</Label2>
+        </Div>
         <Button type="submit">Entrar</Button>
         <Button type="button" onClick={() => navigate('/register')}>Cadastrar-se</Button>
       </Form>

@@ -1,21 +1,17 @@
 import { useState, useEffect, useContext } from "react";
 import api from "../../services/api";
-import Modal from '@mui/joy/Modal';
-import ModalDialog from '@mui/joy/ModalDialog';
-import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
-import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
 import AuthContext from "../../context/AuthContext";
-import { HomeContainer, Title, EventosGrid } from './style';
+import { HomeContainer, Title, EventosGrid, EventoCard, EventoImage, EventoButton, StyledModal, StyledModalDialog, StyledButton, Div } from './style';
 
 function Home() {
   const [eventos, setEventos] = useState([]);
   const [eventoAtual, setEventoAtual] = useState({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
   const [mostrarModal, setMostrarModal] = useState(false);
   const [modoEdicao, setModoEdicao] = useState(false);
-  const { token, logout } = useContext(AuthContext);
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     const buscarEventos = async () => {
@@ -32,7 +28,7 @@ function Home() {
   const handleAdicionarEvento = async () => {
     const eventoAtualizado = {
       ...eventoAtual,
-      data: new Date(eventoAtual.data).toISOString().split('T')[0], // Ajuste de data
+      data: new Date(eventoAtual.data).toISOString().split('T')[0],
     };
     const response = await api.post("/eventos", eventoAtualizado, {
       headers: {
@@ -51,7 +47,7 @@ function Home() {
     }
     const eventoAtualizado = {
       nome: eventoAtual.nome || undefined,
-      data: eventoAtual.data ? new Date(eventoAtual.data).toISOString().split('T')[0] : undefined, // Ajuste de data
+      data: eventoAtual.data ? new Date(eventoAtual.data).toISOString().split('T')[0] : undefined,
       localizacao: eventoAtual.localizacao || undefined,
       imagemUrl: eventoAtual.imagemUrl || undefined,
     };
@@ -95,38 +91,34 @@ function Home() {
     return `${day}-${month}-${year}`;
   };
 
-  const handleLogout = () => {
-    logout();
-    window.location.href = '/';
-  };
-
   return (
     <HomeContainer>
+      <Div>
       <Title>Eventos</Title>
-      <Button onClick={() => {
+      <StyledButton onClick={() => {
         setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
         setModoEdicao(false);
         setMostrarModal(true);
-      }}>Adicionar Evento</Button>
-      <Button onClick={handleLogout}>Sair</Button>
+      }}>Adicionar Evento</StyledButton>
+      </Div>
       <EventosGrid>
         {eventos.map(evento => (
-          <Card key={evento.eventoId} sx={{ width: 300, height: 400 }}>
-            <img src={evento.imagemUrl} alt={evento.nome} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
+          <EventoCard key={evento.eventoId}>
+            <EventoImage src={evento.imagemUrl} alt={evento.nome} />
             <CardContent>
               <Typography level="h2" fontSize="lg" mb={1}>
                 {evento.nome}
               </Typography>
               <Typography>{formatDateForDisplay(evento.data)}</Typography>
               <Typography>{evento.localizacao}</Typography>
-              <Button onClick={() => abrirModalEdicao(evento)}>Editar</Button>
-              <Button onClick={() => handleExcluirEvento(evento.eventoId)}>Excluir</Button>
+              <EventoButton onClick={() => abrirModalEdicao(evento)}>Editar</EventoButton>
+              <EventoButton onClick={() => handleExcluirEvento(evento.eventoId)}>Excluir</EventoButton>
             </CardContent>
-          </Card>
+          </EventoCard>
         ))}
       </EventosGrid>
-      <Modal open={mostrarModal} onClose={() => setMostrarModal(false)}>
-        <ModalDialog>
+      <StyledModal open={mostrarModal} onClose={() => setMostrarModal(false)}>
+        <StyledModalDialog>
           <h2>{modoEdicao ? 'Editar Evento' : 'Adicionar Evento'}</h2>
           <Input
             type="text"
@@ -155,13 +147,14 @@ function Home() {
             onChange={(e) => setEventoAtual({ ...eventoAtual, imagemUrl: e.target.value })}
             required
           />
-          <Button onClick={modoEdicao ? handleEditarEvento : handleAdicionarEvento}>
+          <StyledButton onClick={modoEdicao ? handleEditarEvento : handleAdicionarEvento}>
             {modoEdicao ? 'Salvar Alterações' : 'Salvar'}
-          </Button>
-          <Button onClick={() => setMostrarModal(false)}>Cancelar</Button>
-        </ModalDialog>
-      </Modal>
+          </StyledButton>
+          <StyledButton onClick={() => setMostrarModal(false)}>Cancelar</StyledButton>
+        </StyledModalDialog>
+      </StyledModal>
     </HomeContainer>
   );
 }
+
 export default Home;

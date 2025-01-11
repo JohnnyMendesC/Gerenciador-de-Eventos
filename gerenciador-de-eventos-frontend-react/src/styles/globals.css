@@ -1,18 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f0f2f5;
-  color: #333;
+  font-family: 'Comfortaa', sans-serif;
+  background-color: #F9F9F9;
+  color: #4B4B4B;
   margin: 0;
   padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Alex Brush', cursive;
+  color: #ab8742;
+  font-size: 2em;
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
 }
 
 button {
-  font-family: 'Arial', sans-serif;
-  background-color: #007bff;
+  font-family: 'Comfortaa', sans-serif;
+  background-color: #A7B48C;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -20,7 +32,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #9f6273;
 }
 
 input {
@@ -32,6 +44,6 @@ input {
 }
 
 input:focus {
-  border-color: #007bff;
+  border-color: #A7B48C;
   outline: none;
 }

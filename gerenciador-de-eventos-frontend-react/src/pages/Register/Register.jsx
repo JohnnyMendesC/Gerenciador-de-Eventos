@@ -33,7 +33,7 @@ function Register() {
 
   return (
     <RegisterContainer>
-      <Title>Cadastro de Administrador</Title>
+      <Title>Cadastro</Title>
       <Form onSubmit={handleRegister}>
         <Label htmlFor="nome">Nome</Label>
         <Input
@@ -72,6 +72,7 @@ function Register() {
           required
         />
         <Button type="submit">Cadastrar</Button>
+        <Button type="button" onClick={() => navigate('/')}>Voltar</Button>
       </Form>
     </RegisterContainer>
   );

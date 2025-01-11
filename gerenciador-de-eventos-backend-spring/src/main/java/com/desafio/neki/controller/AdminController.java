@@ -76,6 +76,20 @@ public class AdminController {
 		return ResponseEntity.ok(adminService.encontrarPorAdminId(id));
 	}
 	
+	@Operation(summary = "Busca administrador por token", description = "Busca um administrador de acordo com o seu Id.")
+	@ApiResponses(value = { 
+			@ApiResponse(responseCode = "200", content = {
+					@Content(schema = @Schema(implementation = Admin.class), mediaType = "application/json") }, description = "Retorna o Administrador por Id"),
+			@ApiResponse(responseCode = "400", description = "Requisição inválida. Verifique se os parâmetros fornecidos estão corretos e no formato esperado."),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "500", description = "Erro interno no servidor") })
+	@GetMapping("/token")
+	public ResponseEntity<Optional<AdminResponseDto>> exibirAdminPorToken() {
+		return ResponseEntity.ok(adminService.encontrarAdminPorToken());
+	}
+	
 	
 	@GetMapping("/perfil")
 	public ResponseEntity<String> exibirPerfil(Authentication authentication) {
