@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
+  z-index: 5;
   width: 100%;
   max-height: 4em;
   display: flex;
@@ -62,10 +63,22 @@ export const UserInfo = styled.div`
   gap: 10px;
 `;
 
-export const Span = styled.span`
-  font-family: 'Comfortaa', sans-serif;
-  padding-right: 1vw;
+export const LeftSpan = styled.span`
+  padding-top: .25em;
+  font-family: 'Alex Brush', cursive;
+  position: absolute;
+  left: 3em;
+  font-size: 2.5em;
 `;
+
+export const RightSpan = styled.span`
+  padding-top: .5em;
+  font-family: 'Alex Brush', cursive;
+  position: absolute;
+  right: 6vw;
+  font-size: 2em;
+`;
+
 export const LogoutButton = styled.button`
   background-color: #A7B48C;
   align-self: flex-end;

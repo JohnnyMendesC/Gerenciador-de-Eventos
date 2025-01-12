@@ -2,15 +2,19 @@ import { useState, useEffect, useContext } from "react";
 import api from "../../services/api";
 import Input from '@mui/joy/Input';
 import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
+import Pagination from '@mui/material/Pagination';
 import AuthContext from "../../context/AuthContext";
-import { HomeContainer, Title, EventosGrid, EventoCard, EventoImage, EventoButton, StyledModal, StyledModalDialog, StyledButton, Div } from './style';
+import { HomeContainer, Title, EventosGrid, EventoCard, EventoImage, StyledModal, StyledModalDialog, StyledButton, Div, AddEventButton, Section, EventoNome, EventoInfo, EventoActions, EditButton, DeleteButton } from './style';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
   const [eventos, setEventos] = useState([]);
   const [eventoAtual, setEventoAtual] = useState({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
   const [mostrarModal, setMostrarModal] = useState(false);
   const [modoEdicao, setModoEdicao] = useState(false);
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const eventosPorPagina = 3;
   const { token } = useContext(AuthContext);
 
   useEffect(() => {
@@ -38,6 +42,7 @@ function Home() {
     setEventos([...eventos, response.data]);
     setMostrarModal(false);
     setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
+    toast.success('Evento adicionado com sucesso!');
   };
 
   const handleEditarEvento = async () => {
@@ -61,6 +66,7 @@ function Home() {
       setMostrarModal(false);
       setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
       setModoEdicao(false);
+      toast.success('Evento editado com sucesso!');
     } catch (error) {
       console.error('Erro ao editar evento:', error);
     }
@@ -73,6 +79,7 @@ function Home() {
       }
     });
     setEventos(eventos.filter(evento => evento.eventoId !== id));
+    toast.success('Evento excluído com sucesso!');
   };
 
   const abrirModalEdicao = (evento) => {
@@ -91,32 +98,53 @@ function Home() {
     return `${day}-${month}-${year}`;
   };
 
+  const handleChangePagina = (event, value) => {
+    setPaginaAtual(value);
+  };
+
+  const eventosExibidos = eventos.slice((paginaAtual - 1) * eventosPorPagina, paginaAtual * eventosPorPagina);
+
   return (
     <HomeContainer>
-      <Div>
-      <Title>Eventos</Title>
-      <StyledButton onClick={() => {
+      <AddEventButton onClick={() => {
         setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
         setModoEdicao(false);
         setMostrarModal(true);
-      }}>Adicionar Evento</StyledButton>
-      </Div>
-      <EventosGrid>
-        {eventos.map(evento => (
-          <EventoCard key={evento.eventoId}>
-            <EventoImage src={evento.imagemUrl} alt={evento.nome} />
-            <CardContent>
-              <Typography level="h2" fontSize="lg" mb={1}>
-                {evento.nome}
-              </Typography>
-              <Typography>{formatDateForDisplay(evento.data)}</Typography>
-              <Typography>{evento.localizacao}</Typography>
-              <EventoButton onClick={() => abrirModalEdicao(evento)}>Editar</EventoButton>
-              <EventoButton onClick={() => handleExcluirEvento(evento.eventoId)}>Excluir</EventoButton>
-            </CardContent>
-          </EventoCard>
-        ))}
-      </EventosGrid>
+      }}>
+        Adicionar Evento
+      </AddEventButton>
+      <Section>
+        <Div>
+          <Title>Eventos</Title>
+        </Div>
+        <EventosGrid>
+          {eventosExibidos.map(evento => (
+            <EventoCard key={evento.eventoId}>
+              <EventoImage src={evento.imagemUrl} alt={evento.nome} />
+              <CardContent>
+                <EventoNome level="h2" fontSize="lg" mb={1}>
+                  {evento.nome}
+                </EventoNome>
+                <EventoInfo>
+                  {evento.localizacao}, {formatDateForDisplay(evento.data)}.
+                </EventoInfo>
+                <EventoActions>
+                  <EditButton onClick={() => abrirModalEdicao(evento)}>Editar</EditButton>
+                  <DeleteButton onClick={() => handleExcluirEvento(evento.eventoId)}>Excluir</DeleteButton>
+                </EventoActions>
+              </CardContent>
+            </EventoCard>
+          ))}
+        </EventosGrid>
+        <Pagination
+          count={Math.ceil(eventos.length / eventosPorPagina)}
+          page={paginaAtual}
+          onChange={handleChangePagina}
+          variant="outlined"
+          shape="rounded"
+          sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+        />
+      </Section>
       <StyledModal open={mostrarModal} onClose={() => setMostrarModal(false)}>
         <StyledModalDialog>
           <h2>{modoEdicao ? 'Editar Evento' : 'Adicionar Evento'}</h2>
@@ -153,6 +181,7 @@ function Home() {
           <StyledButton onClick={() => setMostrarModal(false)}>Cancelar</StyledButton>
         </StyledModalDialog>
       </StyledModal>
+      <ToastContainer />
     </HomeContainer>
   );
 }

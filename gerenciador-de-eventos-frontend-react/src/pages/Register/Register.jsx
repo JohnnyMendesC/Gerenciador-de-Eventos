@@ -3,6 +3,8 @@ import { registerAdmin, validatePassword } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { validateEmail } from "../../utils/validateEmail";
 import { RegisterContainer, Title, Form, Label, Input, Button } from './style';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
   const [nome, setNome] = useState('');
@@ -14,20 +16,20 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!validateEmail(email)) {
-      alert('Email inválido.');
+      toast.error('Email inválido.');
       return;
     }
     if (!validatePassword(senha, confirmarSenha)) {
-      alert('As senhas não coincidem.');
+      toast.error('As senhas não coincidem.');
       return;
     }
     try {
       await registerAdmin({ nome, email, senha });
-      alert('Cadastro realizado com sucesso!');
+      toast.success('Cadastro realizado com sucesso!');
       navigate('/');
     } catch (error) {
       console.error('Register error:', error);
-      alert('Erro ao realizar cadastro. Tente novamente.');
+      toast.error('Erro ao realizar cadastro. Tente novamente.');
     }
   };
 
@@ -74,6 +76,7 @@ function Register() {
         <Button type="submit">Cadastrar</Button>
         <Button type="button" onClick={() => navigate('/')}>Voltar</Button>
       </Form>
+      <ToastContainer />
     </RegisterContainer>
   );
 }

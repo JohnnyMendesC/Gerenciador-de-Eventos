@@ -63,6 +63,9 @@ public class EventoService {
 		Evento evento = eventoRepository.findById(eventoId)
 				.orElseThrow(() -> new ResourceNotFoundException("Evento com id "+ eventoId  +" não encontrado."));
 		
+		if (dto.getNome() != null) {
+			evento.setNome(dto.getNome());
+		}
 		if (dto.getData() != null) {
 			evento.setData(dto.getData());
 		}

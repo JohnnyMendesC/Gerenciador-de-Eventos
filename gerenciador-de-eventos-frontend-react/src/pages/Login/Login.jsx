@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import { LoginContainer, Title, Form, Label, Input, Button, Div, Label2 } from './style';
 import Switch from '@mui/material/Switch';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const [email, setEmail] = useState(localStorage.getItem('lastEmail') || '');
@@ -24,11 +26,11 @@ function Login() {
       login(token, lembrarSenha);
       localStorage.setItem('lastEmail', email);
       localStorage.setItem('lastRememberMe', lembrarSenha);
-      alert('Login realizado com sucesso!');
+      toast.success('Login realizado com sucesso!');
       navigate('/home');
     } catch (error) {
       console.error('Login error:', error);
-      alert('Erro ao realizar login. Verifique suas credenciais e tente novamente.');
+      toast.error('Erro ao realizar login. Verifique suas credenciais e tente novamente.');
     }
   };
 
@@ -66,6 +68,7 @@ function Login() {
         <Button type="submit">Entrar</Button>
         <Button type="button" onClick={() => navigate('/register')}>Cadastrar-se</Button>
       </Form>
+      <ToastContainer />
     </LoginContainer>
   );
 }
