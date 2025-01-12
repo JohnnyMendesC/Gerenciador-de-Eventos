@@ -53,7 +53,7 @@ Este repositório contém a implementação **FullStack** do sistema, contendo t
 
 ### Requisitos Adicionais
 -	Segurança JWT para serviços, exceto o login.
--	Documentação dos serviços com Swagger (Spring Fox).
+-	Documentação dos serviços com Swagger (Spring Doc).
 -	Boas práticas de API RESTFul e código disponível em um repositório público.
 
 
