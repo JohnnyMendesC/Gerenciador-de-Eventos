@@ -32,7 +32,11 @@ public class WebSecurityConfig {
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(request -> {
                 var corsConfiguration = new org.springframework.web.cors.CorsConfiguration();
-                corsConfiguration.setAllowedOrigins(List.of("http://localhost:5173"));
+                corsConfiguration.setAllowedOrigins(List.of(
+                    "http://localhost:5173", 
+                    "http://localhost:8081", 
+                    "http://192.168.0.108:8081"	// Acesso do Emulador Mobile
+                ));
                 corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                 corsConfiguration.setAllowedHeaders(List.of("*"));
                 corsConfiguration.setAllowCredentials(true);

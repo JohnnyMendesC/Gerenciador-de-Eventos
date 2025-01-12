@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const RegisterContainer = styled.div`
   max-width: 400px;
-  margin: 0 auto;
+  max-height: 100vh;
+  margin: 5em auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
@@ -11,26 +12,35 @@ export const RegisterContainer = styled.div`
 
 export const Title = styled.h1`
   text-align: center;
-  margin-bottom: 20px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  color: #ab8742;
+  font-family: 'Alex Brush', cursive;
+  font-size: 4.2em;
 `;
 
 export const Form = styled.form`
+  padding: 10px;
   display: flex;
   flex-direction: column;
 `;
 
 export const Label = styled.label`
-  margin-bottom: 5px;
+  margin-bottom: 2px;
+  color: #4B4B4B;
+  font-family: 'Comfortaa', sans-serif;
 `;
 
 export const Input = styled.input`
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+  box-sizing: border-box;
+  font-family: 'Comfortaa', sans-serif;
   &:focus {
-    border-color: #007bff;
+    border-color: #A7B48C;
     outline: none;
   }
 `;
@@ -38,11 +48,12 @@ export const Input = styled.input`
 export const Button = styled.button`
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #A7B48C;
   color: white;
   border: none;
   cursor: pointer;
+  font-family: 'Comfortaa', sans-serif;
   &:hover {
-    background-color: #0056b3;
+    background-color: #9f6273;
   }
 `;

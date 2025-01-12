@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const LoginContainer = styled.div`
   max-width: 400px;
-  margin: 0 auto;
+  margin: 5em auto;
   padding: 20px;
   background-color: white;
   border-radius: 8px;
@@ -11,7 +11,11 @@ export const LoginContainer = styled.div`
 
 export const Title = styled.h1`
   text-align: center;
+  margin-top: 5px;
   margin-bottom: 20px;
+  color: #ab8742;
+  font-family: 'Alex Brush', cursive;
+  font-size: 4.5em;
 `;
 
 export const Form = styled.form`
@@ -21,16 +25,50 @@ export const Form = styled.form`
 
 export const Label = styled.label`
   margin-bottom: 5px;
+  color: #4B4B4B;
+  font-family: 'Comfortaa', sans-serif;
+`;
+
+export const Label2 = styled.label`
+  margin-bottom: 5px;
+  color: #4B4B4B;
+  font-family: 'Comfortaa', sans-serif;
+`;
+
+export const Div = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: baseline;
 `;
 
 export const Input = styled.input`
   margin-bottom: 15px;
   padding: 10px;
+  box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
   width: 100%;
+  color: #4B4B4B;
+  font-family: 'Comfortaa', sans-serif;
   &:focus {
-    border-color: #007bff;
+    border-color: #A7B48C;
+    outline: none;
+  }
+`;
+
+export const Input2 = styled.input`
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  max-width: fit-content;
+  color: #4B4B4B;
+  font-family: 'Comfortaa', sans-serif;
+  &:focus {
+    border-color: #A7B48C;
     outline: none;
   }
 `;
@@ -38,11 +76,12 @@ export const Input = styled.input`
 export const Button = styled.button`
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #A7B48C;
   color: white;
   border: none;
   cursor: pointer;
+  font-family: 'Comfortaa', sans-serif;
   &:hover {
-    background-color: #0056b3;
+    background-color: #9f6273;
   }
 `;

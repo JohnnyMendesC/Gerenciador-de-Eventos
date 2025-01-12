@@ -1,21 +1,21 @@
 import { useState, useEffect, useContext } from "react";
 import api from "../../services/api";
-import Modal from '@mui/joy/Modal';
-import ModalDialog from '@mui/joy/ModalDialog';
-import Button from '@mui/joy/Button';
 import Input from '@mui/joy/Input';
-import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
+import Pagination from '@mui/material/Pagination';
 import AuthContext from "../../context/AuthContext";
-import { HomeContainer, Title, EventosGrid } from './style';
+import { HomeContainer, Title, EventosGrid, EventoCard, EventoImage, StyledModal, StyledModalDialog, StyledButton, Div, AddEventButton, Section, EventoNome, EventoInfo, EventoActions, EditButton, DeleteButton } from './style';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home() {
   const [eventos, setEventos] = useState([]);
   const [eventoAtual, setEventoAtual] = useState({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
   const [mostrarModal, setMostrarModal] = useState(false);
   const [modoEdicao, setModoEdicao] = useState(false);
-  const { token, logout } = useContext(AuthContext);
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const eventosPorPagina = 3;
+  const { token } = useContext(AuthContext);
 
   useEffect(() => {
     const buscarEventos = async () => {
@@ -32,7 +32,7 @@ function Home() {
   const handleAdicionarEvento = async () => {
     const eventoAtualizado = {
       ...eventoAtual,
-      data: new Date(eventoAtual.data).toISOString().split('T')[0], // Ajuste de data
+      data: new Date(eventoAtual.data).toISOString().split('T')[0],
     };
     const response = await api.post("/eventos", eventoAtualizado, {
       headers: {
@@ -42,6 +42,7 @@ function Home() {
     setEventos([...eventos, response.data]);
     setMostrarModal(false);
     setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
+    toast.success('Evento adicionado com sucesso!');
   };
 
   const handleEditarEvento = async () => {
@@ -51,7 +52,7 @@ function Home() {
     }
     const eventoAtualizado = {
       nome: eventoAtual.nome || undefined,
-      data: eventoAtual.data ? new Date(eventoAtual.data).toISOString().split('T')[0] : undefined, // Ajuste de data
+      data: eventoAtual.data ? new Date(eventoAtual.data).toISOString().split('T')[0] : undefined,
       localizacao: eventoAtual.localizacao || undefined,
       imagemUrl: eventoAtual.imagemUrl || undefined,
     };
@@ -65,6 +66,7 @@ function Home() {
       setMostrarModal(false);
       setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
       setModoEdicao(false);
+      toast.success('Evento editado com sucesso!');
     } catch (error) {
       console.error('Erro ao editar evento:', error);
     }
@@ -77,6 +79,7 @@ function Home() {
       }
     });
     setEventos(eventos.filter(evento => evento.eventoId !== id));
+    toast.success('Evento excluído com sucesso!');
   };
 
   const abrirModalEdicao = (evento) => {
@@ -95,38 +98,55 @@ function Home() {
     return `${day}-${month}-${year}`;
   };
 
-  const handleLogout = () => {
-    logout();
-    window.location.href = '/';
+  const handleChangePagina = (event, value) => {
+    setPaginaAtual(value);
   };
+
+  const eventosExibidos = eventos.slice((paginaAtual - 1) * eventosPorPagina, paginaAtual * eventosPorPagina);
 
   return (
     <HomeContainer>
-      <Title>Eventos</Title>
-      <Button onClick={() => {
+      <AddEventButton onClick={() => {
         setEventoAtual({ eventoId: null, nome: '', data: '', localizacao: '', imagemUrl: '' });
         setModoEdicao(false);
         setMostrarModal(true);
-      }}>Adicionar Evento</Button>
-      <Button onClick={handleLogout}>Sair</Button>
-      <EventosGrid>
-        {eventos.map(evento => (
-          <Card key={evento.eventoId} sx={{ width: 300, height: 400 }}>
-            <img src={evento.imagemUrl} alt={evento.nome} style={{ width: '100%', height: '200px', objectFit: 'cover' }} />
-            <CardContent>
-              <Typography level="h2" fontSize="lg" mb={1}>
-                {evento.nome}
-              </Typography>
-              <Typography>{formatDateForDisplay(evento.data)}</Typography>
-              <Typography>{evento.localizacao}</Typography>
-              <Button onClick={() => abrirModalEdicao(evento)}>Editar</Button>
-              <Button onClick={() => handleExcluirEvento(evento.eventoId)}>Excluir</Button>
-            </CardContent>
-          </Card>
-        ))}
-      </EventosGrid>
-      <Modal open={mostrarModal} onClose={() => setMostrarModal(false)}>
-        <ModalDialog>
+      }}>
+        Adicionar Evento
+      </AddEventButton>
+      <Section>
+        <Div>
+          <Title>Eventos</Title>
+        </Div>
+        <EventosGrid>
+          {eventosExibidos.map(evento => (
+            <EventoCard key={evento.eventoId}>
+              <EventoImage src={evento.imagemUrl} alt={evento.nome} />
+              <CardContent>
+                <EventoNome level="h2" fontSize="lg" mb={1}>
+                  {evento.nome}
+                </EventoNome>
+                <EventoInfo>
+                  {evento.localizacao}, {formatDateForDisplay(evento.data)}.
+                </EventoInfo>
+                <EventoActions>
+                  <EditButton onClick={() => abrirModalEdicao(evento)}>Editar</EditButton>
+                  <DeleteButton onClick={() => handleExcluirEvento(evento.eventoId)}>Excluir</DeleteButton>
+                </EventoActions>
+              </CardContent>
+            </EventoCard>
+          ))}
+        </EventosGrid>
+        <Pagination
+          count={Math.ceil(eventos.length / eventosPorPagina)}
+          page={paginaAtual}
+          onChange={handleChangePagina}
+          variant="outlined"
+          shape="rounded"
+          sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}
+        />
+      </Section>
+      <StyledModal open={mostrarModal} onClose={() => setMostrarModal(false)}>
+        <StyledModalDialog>
           <h2>{modoEdicao ? 'Editar Evento' : 'Adicionar Evento'}</h2>
           <Input
             type="text"
@@ -155,13 +175,15 @@ function Home() {
             onChange={(e) => setEventoAtual({ ...eventoAtual, imagemUrl: e.target.value })}
             required
           />
-          <Button onClick={modoEdicao ? handleEditarEvento : handleAdicionarEvento}>
+          <StyledButton onClick={modoEdicao ? handleEditarEvento : handleAdicionarEvento}>
             {modoEdicao ? 'Salvar Alterações' : 'Salvar'}
-          </Button>
-          <Button onClick={() => setMostrarModal(false)}>Cancelar</Button>
-        </ModalDialog>
-      </Modal>
+          </StyledButton>
+          <StyledButton onClick={() => setMostrarModal(false)}>Cancelar</StyledButton>
+        </StyledModalDialog>
+      </StyledModal>
+      <ToastContainer />
     </HomeContainer>
   );
 }
+
 export default Home;

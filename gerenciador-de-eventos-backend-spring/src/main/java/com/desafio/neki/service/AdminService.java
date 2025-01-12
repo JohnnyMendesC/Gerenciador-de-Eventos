@@ -24,6 +24,9 @@ public class AdminService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
+    @Autowired
+    private AutenticacaoService autenticacaoService;
+    
 //	Metodos CRUD do Service do Administrador:
 //	Create | Criar
     @Transactional
@@ -45,6 +48,13 @@ public class AdminService {
 		if (!adminRepository.existsById(id)) {
 		}
 		return Optional.of(AdminResponseDto.fromEntity(adminRepository.findById(id).get()));
+	}
+	
+	public Optional<AdminResponseDto> encontrarAdminPorToken() {
+		Admin adminAutenticado = autenticacaoService.getAuthenticatedUser();
+		if (!adminRepository.existsById(adminAutenticado.getAdminId())) {
+		}
+		return Optional.of(AdminResponseDto.fromEntity(adminAutenticado));
 	}
 	
 //	Update | Atualizar/Editar
