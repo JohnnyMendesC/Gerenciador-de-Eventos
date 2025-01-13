@@ -7,14 +7,15 @@ import HomeScreen from '../screens/Home/Home';
 
 const Stack = createStackNavigator();
 
-export default function AppNavigator() {
+export default function AppNavigator({ initialRoute }) {
+  console.log('AppNavigator initialRoute:', initialRoute);
   return (
     <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Cadastro" component={CadastroScreen} />
-            <Stack.Screen name="Home" component={HomeScreen} />
-        </Stack.Navigator>
+      <Stack.Navigator initialRouteName={initialRoute}>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Cadastro" component={CadastroScreen} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

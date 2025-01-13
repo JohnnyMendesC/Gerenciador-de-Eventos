@@ -26,6 +26,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/admins")
@@ -43,7 +44,7 @@ public class AdminController {
 			@ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
 	@PostMapping("/cadastro")
-	public ResponseEntity<AdminResponseDto> criarAdministrador(@RequestBody AdminRequestDto adminRequestDto) {
+	public ResponseEntity<AdminResponseDto> criarAdministrador(@Valid @RequestBody AdminRequestDto adminRequestDto) {
 		AdminResponseDto response = adminService.criarAdmin(adminRequestDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
