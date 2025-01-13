@@ -1,5 +1,16 @@
 # Gerenciador de Eventos - Desafio Residência - NEKI
 
+## Demonstração do React
+
+<div style="width: 100%; overflow: hidden; display: flex; justify-content: center;">
+  <img src="https://github.com/JohnnyMendesC/Gerenciador-de-Eventos/blob/main/gerenciador-de-eventos-frontend-react/src/assets/react.gif" style="max-width: 100%; height: auto;" alt="Demonstração da Página Web desenvolvida em React">
+</div>
+
+## Demonstração do Native
+<div style="width: 100%; overflow: hidden; display: flex; justify-content: center;">
+  <img src="https://github.com/JohnnyMendesC/Gerenciador-de-Eventos/blob/main/gerenciador-de-eventos-frontend-react-native/assets/native.gif" style="max-width: 100%; height: auto;" alt="Demonstração do Aplicativo desenvolvido em React Native">
+</div>
+
 ## Descrição do Projeto
 
 O **Gerenciador de Eventos** é um projeto de estudos elaborado para a empresa Neki em seu processo seletivo pós Residência em TIC do SerraTec. Com foco na implementação de um sistema que será operado por um Administrador que fará o controle de eventos através da plataforma web ou mobile, podendo cadastrar, listar, editar ou remover eventos. Esse administrador terá um login específico que será criado através da tela de cadastro de administrador. Os dados sensíveis, como a senha cadastrada, são salvos no Banco de Dados de forma criptografada e o sistema todo utiliza Java Web Token para validação das requisições.
