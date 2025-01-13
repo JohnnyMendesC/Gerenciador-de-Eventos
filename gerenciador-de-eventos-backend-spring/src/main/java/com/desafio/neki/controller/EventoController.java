@@ -47,7 +47,7 @@ public class EventoController {
 			@ApiResponse(responseCode = "500", description = "Erro interno no servidor"),
 			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
 	@PostMapping
-	public ResponseEntity<EventoResponseDto> cadastrarEvento(@RequestBody EventoRequestDto eventoRequest) {
+	public ResponseEntity<EventoResponseDto> cadastrarEvento(@Valid @RequestBody EventoRequestDto eventoRequest) {
 		EventoResponseDto response = eventoService.criarEvento(eventoRequest);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
@@ -94,7 +94,7 @@ public class EventoController {
 			@ApiResponse(responseCode = "400", description = "Requisição inválida.") })
 	@PutMapping("/{eventoId}")
 	public ResponseEntity<EventoResponseDto> atualizarEvento(@PathVariable Long eventoId,
-			@RequestBody EventoRequestDto dto) {
+			@Valid @RequestBody EventoRequestDto dto) {
 		EventoResponseDto response = eventoService.atualizarEvento(eventoId, dto);
 		return ResponseEntity.ok(response);
 	}
