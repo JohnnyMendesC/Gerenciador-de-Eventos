@@ -5,7 +5,7 @@ export const RegisterContainer = styled.div`
   max-height: 100vh;
   margin: 5em auto;
   padding: 20px;
-  background-color: white;
+  background-color: #f3e7d1;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;

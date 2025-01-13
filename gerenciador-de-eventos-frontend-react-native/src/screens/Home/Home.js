@@ -154,8 +154,8 @@ export default function HomeScreen({ navigation }) {
         />
       )}
       <TouchableOpacity onPress={() => openModal()} style={styles.floatingButton}>
-        <Text style={styles.buttonText}>Adicionar Evento </Text>
-        <Ionicons name="add" size={28} color="white" />
+        <Text style={styles.buttonText}>Novo Evento </Text>
+        <Ionicons name="add" size={24} color="white" />
       </TouchableOpacity>
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.modalContainer}>
@@ -270,21 +270,22 @@ const styles = StyleSheet.create({
   },
   buttonText: { 
     color: '#FFFFFF',
-    fontSize: 18, 
+    fontSize: 16, 
     fontFamily: 'Comfortaa_400Regular', 
   },
   floatingButton: { 
     backgroundColor: '#ab8742', 
-    width: 200, 
+    width: 160, 
     height: 60, 
     borderRadius: 30, 
     justifyContent: 'center', 
     alignItems: 'center', 
-    flexDirection: 'row', 
-    alignSelf: 'center',
+
+    flexDirection: 'row',
     position: 'absolute', 
-    bottom: 20, 
-    right: 20, 
+    bottom: 10,
+    left: '50%',
+    transform: [{ translateX: -80 }],
   },
   modalContainer: { 
     flex: 1, 

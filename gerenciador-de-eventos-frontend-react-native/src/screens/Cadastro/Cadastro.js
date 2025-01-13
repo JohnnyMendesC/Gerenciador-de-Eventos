@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { registerAdmin } from '../../services/auth'; // Certifique-se de importar a função registerAdmin
@@ -74,7 +74,9 @@ export default function CadastroScreen({ navigation }) {
             secureTextEntry
           />
           {touched.confirmarSenha && errors.confirmarSenha && <Text style={styles.error}>{errors.confirmarSenha}</Text>}
-          <Button title="Cadastrar" onPress={handleSubmit} />
+          <TouchableOpacity style={styles.button} title="Cadastrar" onPress={handleSubmit}>
+            <Text style={styles.buttonText}>Cadastrar</Text>
+          </TouchableOpacity>
         </View>
       )}
     </Formik>
@@ -88,13 +90,33 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3e7d1',
   },
   input: {
+    backgroundColor: '#fff',
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 12,
     paddingHorizontal: 8,
+    fontFamily: 'Comfortaa_400Regular',
   },
   error: {
     color: 'red',
+    fontFamily: 'Comfortaa_400Regular',
+  },
+  title: {
+    fontSize: 24,
+    color: '#ab8742',
+    fontFamily: 'AlexBrush_400Regular',
+  },
+  button: {
+    backgroundColor: '#A7B48C',
+    padding: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    marginVertical: 5,
+  },
+  buttonText: {
+    fontSize: 24,
+    color: '#FFFFFF',
+    fontFamily: 'Amita_700Bold',
   },
 });

@@ -30,7 +30,7 @@ export default function App() {
         setInitialRoute('Home');
       }
       await SplashScreen.hideAsync();
-      await new Promise(resolve => setTimeout(resolve, 8000));
+      await new Promise(resolve => setTimeout(resolve, 6000));
       setIsReady(true);
     };
     prepare();
@@ -50,6 +50,7 @@ export default function App() {
           isMuted={false}
           resizeMode="contain"
           shouldPlay
+          isLooping 
           style={styles.splashVideo}
         />
       </View>
