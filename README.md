@@ -27,9 +27,28 @@ Este repositório contém a implementação **FullStack** do sistema, contendo t
 ### Demonstração de Funcionalidades do React(Web) e do React-Native(Mobile)
 
 <div style="width: 100%; overflow: hidden; display: flex; justify-content: center;">
-  <img src="https://github.com/JohnnyMendesC/Gerenciador-de-Eventos/blob/main/gerenciador-de-eventos-frontend-react/src/assets/react-gif.gif" style="max-width: 100%; height: 450px;" alt="Demonstração da Página Web desenvolvida em React">
-  <img src="https://github.com/JohnnyMendesC/Gerenciador-de-Eventos/blob/main/gerenciador-de-eventos-frontend-react-native/assets/native-gif.gif" style="max-width: 100%; height: 450px;" alt="Demonstração do Aplicativo desenvolvido em React Native">
+  <img src="https://github.com/JohnnyMendesC/Gerenciador-de-Eventos/blob/main/gerenciador-de-eventos-frontend-react/src/assets/react-gif.gif" style="max-width: 100%; height: 300px;" alt="Demonstração da Página Web desenvolvida em React">
+  <img src="https://github.com/JohnnyMendesC/Gerenciador-de-Eventos/blob/main/gerenciador-de-eventos-frontend-react-native/assets/native-gif.gif" style="max-width: 100%; height: 300px;" alt="Demonstração do Aplicativo desenvolvido em React Native">
 </div>
+
+### Frontend (React e React Native)
+**Tela de Login**:  
+- Campos: Email do Administrador, Senha.
+- Caso opte por "Gravar Senha", salve para acesso rápido nas próximas vezes.
+- Botões: Entrar e Cadastrar-se.  
+
+**Tela de Cadastro de Administrador**:  
+-	Campos: Nome do Administrador, Email, Senha, Confirmar Senha.
+-	Valide se a senha coincide com o campo de confirmação.
+-	Ao cadastrar, exiba uma mensagem de sucesso.  
+
+**Tela Home de Eventos**:
+-	Liste os eventos cadastrados pelo administrador, com imagem, título do evento, data e localização.
+-	Opções de Editar data e localização.
+-	Excluir evento da lista.
+-	Botão de Adicionar Evento, que abrirá uma modal com:  
+■	Campos para nome do evento, data, localização e uma imagem.  
+■	Botão de salvar.
 
 ### Backend (Spring Boot)
 **Serviço de Login de Administrador**:
@@ -51,26 +70,6 @@ Este repositório contém a implementação **FullStack** do sistema, contendo t
 
 **Serviço de Exclusão de Evento**:
 -	Exclua o evento usando o eventoId.
-
-
-### Frontend (React e React Native)
-**Tela de Login**:  
-- Campos: Email do Administrador, Senha.
-- Caso opte por "Gravar Senha", salve para acesso rápido nas próximas vezes.
-- Botões: Entrar e Cadastrar-se.  
-
-**Tela de Cadastro de Administrador**:  
--	Campos: Nome do Administrador, Email, Senha, Confirmar Senha.
--	Valide se a senha coincide com o campo de confirmação.
--	Ao cadastrar, exiba uma mensagem de sucesso.  
-
-**Tela Home de Eventos**:
--	Liste os eventos cadastrados pelo administrador, com imagem, título do evento, data e localização.
--	Opções de Editar data e localização.
--	Excluir evento da lista.
--	Botão de Adicionar Evento, que abrirá uma modal com:  
-■	Campos para nome do evento, data, localização e uma imagem.  
-■	Botão de salvar.
 
 ### Requisitos Adicionais
 -	Segurança JWT para serviços, exceto o login.
